@@ -1,0 +1,37 @@
+# Environment files
+.env
+*.env.local
+
+# Node / Angular
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Java / Maven
+backend/target/
+backend/.mvn/
+**/.classpath
+**/.project
+**/.settings/
+
+# Python
+ai-service/__pycache__/
+ai-service/.venv/
+ai-service/venv/
+ai-service/*.egg-info/
+ai-service/.pytest_cache/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes
+postgres_data/
