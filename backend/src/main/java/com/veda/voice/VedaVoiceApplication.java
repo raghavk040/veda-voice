@@ -1,7 +1,11 @@
 package com.veda.voice;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class VedaVoiceApplication {
   public static void main(String[] args) {
-    System.out.println("Spring Boot 3 placeholder app");
+    SpringApplication.run(VedaVoiceApplication.class, args);
   }
 }
