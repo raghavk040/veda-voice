@@ -5,7 +5,7 @@ echo "=== Veda Voice Post-Create Setup ==="
 
 # Install Angular CLI globally
 echo "Installing Angular CLI..."
-npm install -g @angular/cli@17
+npm install -g @angular/cli@19
 
 # Install frontend dependencies
 if [ -f "frontend/package.json" ]; then
