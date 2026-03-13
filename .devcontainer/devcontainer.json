@@ -1,0 +1,66 @@
+{
+  "name": "veda-voice Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": true,
+      "mavenVersion": "3.9"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/postgresql:1": {
+      "version": "15"
+    }
+  },
+  "postCreateCommand": "npm install -g @angular/cli@17 && cd frontend && npm install && cd ../ai-service && pip install -r requirements.txt",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "angular.ng-template",
+        "bradlc.vscode-tailwindcss",
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker",
+        "ms-ossdata.vscode-postgresql",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java"
+        },
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.python"
+        },
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-21",
+            "default": true
+          }
+        ]
+      }
+    }
+  },
+  "forwardPorts": [4200, 8080, 8000, 5432],
+  "portsAttributes": {
+    "4200": { "label": "Angular Frontend" },
+    "8080": { "label": "Spring Boot Backend" },
+    "8000": { "label": "FastAPI AI Service" },
+    "5432": { "label": "PostgreSQL" }
+  },
+  "remoteUser": "vscode"
+}

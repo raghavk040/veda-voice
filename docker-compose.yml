@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - veda-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB:-vedavoice}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER:-vedauser}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD:-vedapassword}
+      - AI_SERVICE_URL=http://ai-service:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - veda-network
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-vedauser}:${POSTGRES_PASSWORD:-vedapassword}@db:5432/${POSTGRES_DB:-vedavoice}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - veda-network
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-vedavoice}
+      - POSTGRES_USER=${POSTGRES_USER:-vedauser}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-vedapassword}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vedauser} -d ${POSTGRES_DB:-vedavoice}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - veda-network
+
+volumes:
+  postgres_data:
+
+networks:
+  veda-network:
+    driver: bridge
