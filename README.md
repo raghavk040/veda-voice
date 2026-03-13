@@ -1,7 +1,7 @@
 # Veda Voice
 
 Monorepo with:
-- **frontend** — Angular 17 app (port 4200)
+- **frontend** — Angular 21 app (port 4200)
 - **backend** — Spring Boot 3 (Maven, Java 17+) (port 8080)
 - **ai-service** — FastAPI (Python 3.11+) (port 8000)
 - **postgres** — PostgreSQL 15 (via Docker Compose)
