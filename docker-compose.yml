@@ -1,0 +1,55 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: veda-voice-frontend
+    ports:
+      - "4200:4200"
+    environment:
+      - FRONTEND_PORT=${FRONTEND_PORT}
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: veda-voice-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+
+  ai-service:
+    build: ./ai-service
+    container_name: veda-voice-ai-service
+    ports:
+      - "8000:8000"
+    environment:
+      - AI_SERVICE_PORT=${AI_SERVICE_PORT}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: veda-voice-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
