@@ -1,0 +1,7 @@
+server:
+  port: ${BACKEND_PORT:8080}
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:veda_voice}
+    username: ${POSTGRES_USER:veda}
+    password: ${POSTGRES_PASSWORD:veda}
