@@ -1,0 +1,85 @@
+{
+  "name": "Veda Voice Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": true,
+      "installGradle": false
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/sshd:1": {}
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "angular.ng-template",
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-21",
+            "default": true
+          }
+        ],
+        "python.defaultInterpreterPath": "/usr/local/bin/python3.11",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java"
+        },
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.python"
+        }
+      }
+    }
+  },
+  "forwardPorts": [4200, 8080, 8000, 5432],
+  "portsAttributes": {
+    "4200": {
+      "label": "Angular Frontend",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Spring Boot Backend",
+      "onAutoForward": "notify"
+    },
+    "8000": {
+      "label": "FastAPI AI Service",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+  "remoteEnv": {
+    "NODE_ENV": "development",
+    "JAVA_HOME": "/usr/local/sdkman/candidates/java/current",
+    "PYTHON_VERSION": "3.11"
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/veda-voice,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/workspaces/veda-voice"
+}
