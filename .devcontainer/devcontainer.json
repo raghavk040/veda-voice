@@ -22,7 +22,7 @@
       "version": "15"
     }
   },
-  "postCreateCommand": "npm install -g @angular/cli@17 && cd frontend && npm install && cd ../ai-service && pip install -r requirements.txt",
+  "postCreateCommand": "npm install -g @angular/cli@19 && cd frontend && npm install && cd ../ai-service && pip install -r requirements.txt",
   "customizations": {
     "vscode": {
       "extensions": [
